@@ -1,0 +1,47 @@
+experiment:
+    name: "more_simplified"
+    base_path: "/scratch/at4535/rl_auto_scheduler_2/cost_model/"
+
+data_generation:
+    train_dataset_file: "/scratch/at4535/rl_auto_scheduler_2/cost_model/train_converted_50.pkl" # training / validation set
+    valid_dataset_file: "/scratch/at4535/cost_model/val_converted_all_balanced_old.pkl"
+    benchmark_dataset_file: "benchmarks_ds2.json"
+    dataset_name:  "dataset_new_data_"
+    batch_size: 128
+    nb_processes: 10
+
+training:
+    log_file: "logs.txt" # Just the name
+    lr: 0.0001
+    max_epochs: 20
+    training_gpu: "0"
+    validation_gpu: "cpu"
+    continue_training: False
+    # # model_weights_path: "/weights/best_model_Baseline_b14a.pt"
+    # model_weights_path: "/scratch/at4535/rl_auto_scheduler_2/cost_model/weights/best_model_more_simplified_a7ee.pt"
+
+testing:
+    testing_model_weights_path: "/scratch/at4535/rl_auto_scheduler_2/cost_model/weights/best_model_more_simplified_cab3.pt" # Model weights to evaluate
+    gpu: "cpu" # GPU to validate on
+    
+
+wandb:
+    use_wandb: True
+    project: "release_model"
+    
+model: 
+    input_size: 846
+    comp_embed_layer_sizes:
+        - 600
+        - 350
+        - 200
+        - 180
+    drops:
+        - 0.050
+        - 0.050
+        - 0.050
+        - 0.050
+        - 0.050
+
+defaults:
+  - override hydra/job_logging: disabled
